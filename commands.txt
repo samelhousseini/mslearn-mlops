@@ -1,0 +1,28 @@
+
+## https://docs.microsoft.com/en-us/cli/azure/ml?view=azure-cli-latest
+## https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-overview
+## https://github.com/Azure/azureml-examples/tree/main/cli/assets
+
+
+
+az login
+
+az account set -s "<YOUR_SUBSCRIPTION_NAME_OR_ID>"
+
+$env:GROUP="mlops-dev-rg"
+
+$env:LOCATION="eastus"
+
+$env:WORKSPACE="mlops-dev"
+
+$env:DATASET="./data/diabetes-dev.csv"
+
+az configure --defaults group=$env:GROUP workspace=$env:WORKSPACE location=$env:LOCATION
+
+az configure -l -o table 
+
+az ml data create --workspace-name $env:WORKSPACE --resource-group $env:GROUP --file local-folder.yml
+
+az ml compute create --file compute.yml --workspace-name $env:WORKSPACE --resource-group $env:GROUP
+
+az ml job create --file job.yml --workspace-name $env:WORKSPACE --resource-group $env:GROUP

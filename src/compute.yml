@@ -1,0 +1,4 @@
+$schema: https://azuremlschemas.azureedge.net/latest/computeInstance.schema.json 
+name: mlops-diabetes-compute
+type: computeinstance
+size: Standard_DS12_v2

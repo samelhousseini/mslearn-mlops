@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 config.json
 config1.json
+secret.key

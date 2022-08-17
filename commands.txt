@@ -7,9 +7,11 @@
 
 az login
 
-az account set -s "<YOUR_SUBSCRIPTION_NAME_OR_ID>"
+az account set -s ""
 
 $env:GROUP="mlops-dev-rg"
+
+$env:SUBSCRIPTION=""
 
 $env:LOCATION="eastus"
 
@@ -26,3 +28,6 @@ az ml data create --workspace-name $env:WORKSPACE --resource-group $env:GROUP --
 az ml compute create --file compute.yml --workspace-name $env:WORKSPACE --resource-group $env:GROUP
 
 az ml job create --file job.yml --workspace-name $env:WORKSPACE --resource-group $env:GROUP
+
+
+az ad sp create-for-rbac --name "guthub-service-principal" --role contributor --scopes /subscriptions/[subs-id]/resourceGroups/mlops-dev-rg --sdk-auth

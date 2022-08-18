@@ -22,10 +22,7 @@ jobs:
       run: |
         python -m pip install -r requirements.txt  
     - name : machine ls $GITHUB_WORKSPACE
-      run : "ls -la $GITHUB_WORKSPACE"
-    - name : machine ls $HOME
-      working-directory : "."
-      run : "ls -la $HOME"        
+      run : "ls -la $GITHUB_WORKSPACE"  
     - name: Run linting tests
       run: | 
         flake8 src/model/

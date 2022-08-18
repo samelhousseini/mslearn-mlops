@@ -8,7 +8,9 @@ on:
 jobs:
   train:
     runs-on: ubuntu-latest
-    steps:      
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@New-Trunk
     - name: Use Python version 3.8
       uses: actions/setup-python@v3
       with:

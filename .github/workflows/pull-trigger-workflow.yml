@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  train:
+  pull_request_checking:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo

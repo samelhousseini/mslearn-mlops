@@ -19,6 +19,16 @@ $env:WORKSPACE="mlops-dev"
 
 $env:DATASET="./data/diabetes-dev.csv"
 
+
+$env:GROUP="selhousseini-rg"
+
+$env:LOCATION="eastus"
+
+$env:WORKSPACE="mlops-prod"
+
+$env:DATASET="./data/diabetes-dev.csv"
+
+
 az configure --defaults group=$env:GROUP workspace=$env:WORKSPACE location=$env:LOCATION
 
 az configure -l -o table 
@@ -31,3 +41,6 @@ az ml job create --file job.yml --workspace-name $env:WORKSPACE --resource-group
 
 
 az ad sp create-for-rbac --name "guthub-service-principal" --role contributor --scopes /subscriptions/[subs-id]/resourceGroups/mlops-dev-rg --sdk-auth
+
+
+az ad sp create-for-rbac --name "github-service-principal-prod" --role contributor --scopes /subscriptions/[subs-id]/resourceGroups/selhousseini-rg --sdk-auth

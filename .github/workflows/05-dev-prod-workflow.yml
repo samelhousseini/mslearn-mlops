@@ -1,0 +1,53 @@
+name: Work with Environments - Dev and Prod
+
+on:
+  push:
+    branches: [ main ]
+
+
+env: 
+  DEV_RG: mlops-dev-rg
+  DEV_WS: mlops-dev
+  PROD_RG: selhousseini-rg 
+  PROD_WS: mlops-prod
+
+
+jobs:
+  build-dev:
+    runs-on: ubuntu-latest
+    environment:
+        name: dev 
+    steps:
+    - name: check out repo
+      uses: actions/checkout@v3
+    - name: install az ml extension
+      run: az extension add -n ml -y
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: set current directory
+      run: cd src
+    - name: run pipeline
+      run: az ml job create --file src/job.yml --resource-group $DEV_RG --workspace-name $DEV_WS --stream
+
+  build-prod:
+    needs: [build-dev]
+    runs-on: ubuntu-latest
+    environment:
+        name: prod 
+    steps:
+    - name: check out repo
+      uses: actions/checkout@v3
+    - name: install az ml extension
+      run: az extension add -n ml -y
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Create Cluster
+      run: az ml compute create --file production/cluster-location.yml --workspace-name $PROD_WS --resource-group $PROD_RG       
+    - name: set current directory
+      run: cd src
+    - name: run pipeline
+      run: az ml job create --file src/job.yml --resource-group $PROD_RG --workspace-name $PROD_WS --stream      

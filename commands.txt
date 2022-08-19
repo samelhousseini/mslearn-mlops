@@ -44,3 +44,5 @@ az ad sp create-for-rbac --name "guthub-service-principal" --role contributor --
 
 
 az ad sp create-for-rbac --name "github-service-principal-prod" --role contributor --scopes /subscriptions/[subs-id]/resourceGroups/selhousseini-rg --sdk-auth
+
+az ml model create --name "diabetes-prod-model" --type "mlflow_model" --path "azureml://jobs/plum_island_3cnjygc1pf/outputs/artifacts/model" --workspace-name $env:WORKSPACE --resource-group $env:GROUP

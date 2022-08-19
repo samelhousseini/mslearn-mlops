@@ -131,3 +131,4 @@ config.json
 config1.json
 secret.key
 config-prod.json
+commands.txt

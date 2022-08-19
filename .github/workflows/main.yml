@@ -1,0 +1,32 @@
+name: manually triggered workflow
+
+on:
+  workflow_dispatch:
+  
+  
+env: 
+  DEV_RG: mlops-dev-rg
+  DEV_WS: mlops-dev
+  PROD_RG: selhousseini-rg 
+  PROD_WS: mlops-prod
+
+
+jobs:
+  build-prod:
+    runs-on: ubuntu-latest
+    environment:
+        name: prod 
+    steps:
+    - name: check out repo
+      uses: actions/checkout@v3
+    - name: install az ml extension
+      run: az extension add -n ml -y
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: get last job
+      run: JOB_NAME=$(az ml job list --query "[0].name" | tr -d '"')
+    - name: print last job
+      run: echo $JOB_NAME
+      

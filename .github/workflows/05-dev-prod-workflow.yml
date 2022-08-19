@@ -50,4 +50,4 @@ jobs:
     - name: set current directory
       run: cd src
     - name: run pipeline
-      run: az ml job create --file src/job.yml --resource-group $PROD_RG --workspace-name $PROD_WS --stream      
+      run: az ml job create --file production/job.yml --resource-group $PROD_RG --workspace-name $PROD_WS --stream      
